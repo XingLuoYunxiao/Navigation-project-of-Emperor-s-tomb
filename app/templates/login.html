@@ -1,14 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>登录</title>
-</head>
-<body>
-    <h1>用户登录</h1>
-    <form method="POST">
-        邮箱: <input type="text" name="email"><br>
-        密码: <input type="password" name="password"><br>
-        <input type="submit" value="登录">
-    </form>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}登录{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="card col-md-6 col-lg-4">
+        <h2 class="text-center mb-4">欢迎来到皇陵导览</h2>
+        {% if message %}
+        <div class="alert alert-success text-center" role="alert">
+            {{ message }}
+        </div>
+        <script>
+            setTimeout(function() {
+                window.location.href = "{{ url_for('index') }}";
+            }, 3000);
+        </script>
+        {% else %}
+        <form method="POST" action="{{ url_for('login') }}">
+            <div class="mb-3">
+                <label for="email" class="form-label">邮箱</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">密码</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">登录</button>
+        </form>
+        <div class="text-center mt-3">
+            <a href="{{ url_for('register') }}">注册</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

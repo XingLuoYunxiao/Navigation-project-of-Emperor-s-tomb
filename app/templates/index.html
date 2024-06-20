@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Tang18Ling</title>
-</head>
-<body>
-    <h1>欢迎来到唐十八陵介绍网站</h1>
-    <a href="/register">注册</a>
-    <a href="/login">登录</a>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}首页{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="container text-center">
+        <h1>欢迎来到唐十八陵！</h1>
+        <p>这里是您的主页。</p>
+    </div>
+</div>
+{% endblock %}
