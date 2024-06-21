@@ -3,10 +3,78 @@
 {% block title %}首页{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-    <div class="container text-center">
-        <h1>欢迎来到唐十八陵！</h1>
-        <p>这里是您的主页。</p>
+<style>
+    .card_tangling {
+  width: 300px;
+  height: 300px;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 150px; /* 设置图片的固定高度 */
+  object-fit: fill; /* 图片覆盖整个容器区域 */
+}
+</style>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">欢迎来到唐十八陵！</h1>
+
+    <!-- 唐十八陵介绍模块 -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>唐十八陵介绍</h3>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                唐十八陵是中国唐朝皇室的皇家陵墓群，位于陕西省西安市附近。这些陵墓不仅具有重要的历史和文化价值，还展示了唐朝时期的建筑和艺术风格。
+            </p>
+        </div>
     </div>
+
+    <!-- 唐十八陵导览模块 -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>唐十八陵导览</h3>
+        </div>
+        <div class="card-body">
+            <input type="text" id="search" class="form-control mb-3" placeholder="搜索" oninput="searchTangLing()">
+            <div id="search-results"></div>
+        </div>
+    </div>
+
+    <!-- 唐十八陵展示模块 -->
+    <h3 class="mt-4">唐十八陵展示</h3>
+    {% for dynasty, tombs in tang_lings_by_dynasty.items() %}
+    <h4>{{ dynasty }}</h4>
+    <div class="row">
+        {% for tang_ling in tombs %}
+        <div class="col-md-4 mb-3">
+            <div class="card_tangling">
+                <img src="{{ url_for('static', filename=tang_ling.image) }}" class="card-img-top" alt="{{ tang_ling.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ tang_ling.name }}</h5>
+                    <a href="{{ url_for('tang_ling_detail', id=tang_ling.id) }}" class="btn btn-primary">详情</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
 </div>
+
+<script>
+    function searchTangLing() {
+        var query = document.getElementById('search').value;
+        if (query.trim() === '') {
+            // 如果搜索框为空，清空搜索结果
+            document.getElementById('search-results').innerHTML = '';
+        } else {
+            // 否则执行搜索操作
+            fetch('/search?query=' + encodeURIComponent(query))
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('search-results').innerHTML = html;
+                });
+        }
+    }
+</script>
 {% endblock %}

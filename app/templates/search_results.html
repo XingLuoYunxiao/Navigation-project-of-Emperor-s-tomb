@@ -1,0 +1,24 @@
+{% block title %}搜索结果{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>搜索结果</h1>
+    {% if tang_lings %}
+    <div class="search-results-wrapper" style="overflow-x: auto; white-space: nowrap;">
+        {% for tang_ling in tang_lings %}
+        <div class="search-result-item" style="display: inline-block; vertical-align: top; width: 300px; margin-right: 15px;">
+            <div class="card">
+                <img src="{{ url_for('static', filename=tang_ling.image) }}" class="card-img-top" alt="{{ tang_ling.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ tang_ling.name }}</h5>
+                    <a href="{{ url_for('tang_ling_detail', id=tang_ling.id) }}" class="btn btn-primary">详情</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>没有找到相关结果。</p>
+    {% endif %}
+</div>
+{% endblock %}

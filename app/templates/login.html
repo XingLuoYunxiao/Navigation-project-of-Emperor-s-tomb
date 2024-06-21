@@ -2,10 +2,51 @@
 
 {% block title %}登录{% endblock %}
 
+{% block hide_nav %}True{% endblock %}
+
 {% block content %}
+<style>
+    .content-wrapper {
+    background-color: rgba(255, 255, 255, 0); /* 完全透明的白色背景 */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0);
+    margin: 20px 0;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    .card {
+        background-color: rgba(255, 255, 255, 0.8); /* 更透明的白色背景 */
+        border: none; /* 移除默认边框 */
+        border-radius: 15px; /* 增加圆角 */
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* 轻微的阴影 */
+    }
+    
+    .card {
+        background-color: rgba(255, 255, 255, 0.5); /* 更透明的白色背景 */
+        border: none; /* 移除默认边框 */
+        border-radius: 15px; /* 增加圆角 */
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* 轻微的阴影 */
+    }
+    .card .form-label {
+        margin-left: 10px;
+        margin-bottom: 0.5rem; /* 增加标签的底部边距 */
+    }
+    .card .form-control {
+        margin-bottom: 1.5rem; /* 增加文本框的底部边距 */
+    }
+    .card .text-center a {
+        color: #70cd7f; /* 注册链接的颜色 */
+        text-decoration: none; /* 移除下划线 */
+    }
+    .card .text-center a:hover {
+        text-decoration: underline; /* 鼠标悬停时显示下划线 */
+    }
+}
+</style>
 <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
     <div class="card col-md-6 col-lg-4">
-        <h2 class="text-center mb-4">欢迎来到皇陵导览</h2>
+        <h2 class="text-center mb-4">登录</h2>
         {% if message %}
         <div class="alert alert-success text-center" role="alert">
             {{ message }}

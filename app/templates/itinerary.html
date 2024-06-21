@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}行程规划{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>行程规划</h1>
+    <ul class="list-group">
+        {% for itinerary in itineraries %}
+        <li class="list-group-item">
+            <strong>{{ itinerary.name }}</strong>: {{ itinerary.description }} ({{ itinerary.date }})
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}{{ tang_ling.name }}详情{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3>{{ tang_ling.name }}</h3>
+                    <p class="card-text">{{ tang_ling.description }}</p>
+                </div>
+                <img src="{{ url_for('static', filename=tang_ling.image) }}" class="card-img-top" alt="{{ tang_ling.name }}">
+                <div class="card-body">
+                    <p><a href="{{ tang_ling.website }}" target="_blank">相关链接</a></p>
+                </div>
+            </div>
+
+            <!-- 景点信息 -->
+            <div class="card mb-4">
+                <div style="display: flex; align-items: center; justify-content: center; width: 100%;">
+                    <svg class="icon" style="width: 30px; height: 30px; margin-right: 10px; margin-left: 10px;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4554" width="200" height="200"><path d="M740.778667 237.696c-17.578667-30.464 17.621333-36.565333 17.621333-36.565333V170.666667H265.6v30.464s35.2 6.101333 17.621333 36.565333C265.6 268.202667 171.733333 390.101333 42.666667 390.101333c0 0 41.045333 85.333333 170.154666 97.493334v256h123.178667v-249.898667H371.2v249.941333h70.4V493.653333h129.066667v249.941334h70.4V493.653333h46.933333v249.941334h129.066667v-262.101334C940.245333 475.434667 981.333333 390.101333 981.333333 390.101333c-129.066667 0-222.933333-128-240.554666-152.405333zM171.733333 853.333333h674.688v-97.536H171.733333V853.333333z m0 0" p-id="4555"></path></svg>
+                    <div class="card-header" style="flex-grow: 1;">
+                        <h3>景点</h3>
+                    </div>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for spot in spots %}
+                    <li class="list-group-item">
+                        <h5>{{ spot.name }}</h5>
+                        <p>{{ spot.description }}</p>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- 评论 -->
+            <div class="card mb-4">
+                <div style="display: flex; align-items: center; justify-content: center; width: 100%;">
+                    <svg t="1718972602918" class="icon" style="width: 30px; height: 30px; margin-right: 10px; margin-left: 10px;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5630" width="200" height="200"><path d="M850.879104 96.41591l-676.303067 0c-60.681034 0-110.049418 49.367361-110.049418 110.049418l0 446.200388c0 60.681034 49.367361 110.049418 110.049418 110.049418l90.307795 0L396.936381 931.129846c3.793396 4.838192 9.598612 7.66354 15.746636 7.66354s11.952216-2.825348 15.746636-7.66354l132.052548-168.414711 290.396903 0c60.681034 0 110.049418-49.367361 110.049418-110.049418L960.928522 206.465329C960.928522 145.784294 911.561162 96.41591 850.879104 96.41591zM920.91111 652.665717c0 38.614459-31.416524 70.030983-70.030983 70.030983L550.744419 722.6967c-6.147 0-11.952216 2.825348-15.745612 7.66354L412.683017 886.356107l-122.31579-155.995867c-3.792373-4.838192-9.597589-7.66354-15.745612-7.66354l-100.045577 0c-38.614459 0-70.030983-31.416524-70.030983-70.030983L104.545054 206.465329c0-38.614459 31.416524-70.030983 70.030983-70.030983l676.303067 0c38.614459 0 70.030983 31.416524 70.030983 70.030983L920.910087 652.665717z" fill="#272636" p-id="5631"></path><path d="M272.621051 344.526731c-44.132126 0-80.035848 35.903721-80.035848 80.035848 0 44.132126 35.903721 80.036871 80.035848 80.036871s80.035848-35.904745 80.035848-80.036871C352.655875 380.430452 316.752154 344.526731 272.621051 344.526731zM272.621051 464.582037c-22.065552 0-40.017412-17.951861-40.017412-40.018436 0-22.065552 17.952884-40.017412 40.017412-40.017412 22.065552 0 40.017412 17.951861 40.017412 40.017412C312.638463 446.629153 294.686602 464.582037 272.621051 464.582037z" fill="#272636" p-id="5632"></path><path d="M512.727571 344.526731c-44.132126 0-80.035848 35.903721-80.035848 80.035848 0 44.132126 35.903721 80.036871 80.035848 80.036871 44.132126 0 80.035848-35.904745 80.035848-80.036871C592.763418 380.430452 556.859697 344.526731 512.727571 344.526731zM512.727571 464.582037c-22.065552 0-40.017412-17.951861-40.017412-40.018436 0-22.065552 17.951861-40.017412 40.017412-40.017412 22.065552 0 40.017412 17.951861 40.017412 40.017412C552.746006 446.629153 534.793122 464.582037 512.727571 464.582037z" fill="#272636" p-id="5633"></path><path d="M752.836137 344.526731c-44.131103 0-80.035848 35.903721-80.035848 80.035848 0 44.132126 35.904745 80.036871 80.035848 80.036871s80.035848-35.904745 80.035848-80.036871C832.871985 380.430452 796.96724 344.526731 752.836137 344.526731zM752.836137 464.582037c-22.066575 0-40.017412-17.951861-40.017412-40.018436 0-22.065552 17.951861-40.017412 40.017412-40.017412s40.017412 17.951861 40.017412 40.017412C792.853549 446.629153 774.902712 464.582037 752.836137 464.582037z" fill="#272636" p-id="5634"></path></svg>
+                    <div class="card-header" style="flex-grow: 1;">
+                        <h3>评论</h3>
+                    </div>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for review in reviews %}
+                    <li class="list-group-item">
+                        <strong>{{ review.user.username }}</strong>: {{ review.content }} ({{ review.date }})
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('tang_ling_detail', id=tang_ling.id) }}">
+                        <div class="mb-3">
+                            <label for="content" class="form-label">你的评论</label>
+                            <textarea class="form-control" id="content" name="content" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">提交评论</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <!-- 实时天气预报 -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3>实时天气预报</h3>
+                </div>
+                <div class="card-body">
+                    <h5>{{ city_name }}</h5>
+                    <p>{{ weather_info }}</p>
+                </div>
+            </div>
+
+            <!-- 酒店信息 -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3>住宿情况</h3>
+                </div>
+                <div class="card-body">
+                    <p>推荐酒店和住宿选项：</p>
+                    <ul>
+                        <li><a href="https://hotel.qunar.com/cn/xian/dt-69079/?fromDate=2024-06-21&toDate=2024-06-22&hotelSource=5403" target="_blank">贝斯特酒店</a>: 环境优美，卫生</li>
+                        <li><a href="https://hotel.qunar.com/cn/xian/dt-70568/?fromDate=2024-06-21&toDate=2024-06-22&hotelSource=5403" target="_blank">五星酒店</a>: 五星级酒店，舒适性高</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -12,22 +12,77 @@
             background-image: url("{{ url_for('static', filename='images/background.jpg') }}");
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             background-repeat: no-repeat;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
-        .card {
+        .content-wrapper {
             background-color: rgba(255, 255, 255, 0.85);
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .navbar {
+            background: rgba(255, 255, 255, 0.8);
+        }
+        .dropdown-menu {
+            right: 0;
+            left: auto;
+        }
+        h1, h3 {
+            font-family: 'Georgia', serif;
+        }
+        p, .card-text {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+        .card-title {
+            font-family: 'Georgia', serif;
+            color: #555;
+        }
+        .btn-primary {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+        .btn-primary:hover {
+            background-color: #45a049;
+            border-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    {% if not hide_nav %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" width="30" height="30" class="d-inline-block align-top me-2" alt="">
+                唐十八陵
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">主页</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('itinerary') }}">行程规划</a></li>
+                </ul>
+            </div>
+            <div class="d-flex align-items-center">
+                <div class="dropdown">
+                    <img src="{{ url_for('static', filename='images/avatar.png') }}" class="rounded-circle" width="40" height="40" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="{{ url_for('logout') }}">退出</a></li>
+                    </ul>
+                </div>
+                <span class="ms-2">{{ current_user.username }}</span>
+            </div>
+        </div>
+    </nav>
+    {% endif %}
+    <div class="container content-wrapper">
         {% block content %}{% endblock %}
     </div>
     <!-- Bootstrap 5 JS and Popper.js -->
