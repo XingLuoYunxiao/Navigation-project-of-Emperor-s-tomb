@@ -5,12 +5,61 @@
 {% block content %}
 <div class="container mt-5">
     <h1>行程规划</h1>
-    <ul class="list-group">
-        {% for itinerary in itineraries %}
-        <li class="list-group-item">
-            <strong>{{ itinerary.name }}</strong>: {{ itinerary.description }} ({{ itinerary.date }})
-        </li>
-        {% endfor %}
-    </ul>
+    <div id="map" style="height: 500px;"></div>
+    <div class="mt-4">
+        <h3>新增行程</h3>
+        <form method="POST" action="{{ url_for('add_itinerary') }}">
+            <div class="mb-3">
+                <label for="tang_ling_id" class="form-label">唐十八陵</label>
+                <select class="form-control" id="tang_ling_id" name="tang_ling_id" required>
+                    {% for tang_ling in tang_lings %}
+                    <option value="{{ tang_ling.id }}">{{ tang_ling.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="date" class="form-label">日期</label>
+                <input type="date" class="form-control" id="date" name="date" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">描述</label>
+                <textarea class="form-control" id="description" name="description" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">添加行程</button>
+        </form>
+    </div>
+    <div class="mt-4">
+        <h3>我的行程</h3>
+        <ul class="list-group">
+            {% for itinerary in itineraries %}
+            <li class="list-group-item">
+                <strong>{{ itinerary.tang_ling.name }}</strong>: {{ itinerary.date }} - {{ itinerary.description }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
 </div>
+
+<script src="https://api.map.baidu.com/api?v=3.0&ak=Ln3DBpBI1JfKMCFn9hCx4f1RRycmoVNW"></script>
+<script>
+    var map = new BMap.Map("map");
+    var point = new BMap.Point(109.833098, 34.4278); // 中心点
+    map.centerAndZoom(point, 12);
+    map.enableScrollWheelZoom(true);
+
+    var tangLings = JSON.parse('{{ tang_lings | tojson | safe }}');
+
+    tangLings.forEach(function(tangLing) {
+        var point = new BMap.Point(tangLing.longitude, tangLing.latitude);
+        var marker = new BMap.Marker(point);
+        map.addOverlay(marker);
+        var infoWindow = new BMap.InfoWindow(
+            "<strong>" + tangLing.name + "</strong><br/>" + tangLing.description
+        );
+        marker.addEventListener("click", function() {
+            document.getElementById('tang_ling_id').value = tangLing.id;
+            map.openInfoWindow(infoWindow, point);
+        });
+    });
+</script>
 {% endblock %}

@@ -4,6 +4,7 @@ from app.models import User, TangLing, Itinerary, Review, Spot
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from datetime import date
 import requests
+import json
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -60,13 +61,21 @@ def login():
 def index():
     tang_lings = TangLing.query.all()
     tang_lings_by_dynasty = {}
+    tang_lings_list = []
     for tang_ling in tang_lings:
         dynasty = tang_ling.dynasty
         if dynasty not in tang_lings_by_dynasty:
             tang_lings_by_dynasty[dynasty] = []
         tang_lings_by_dynasty[dynasty].append(tang_ling)
+        tang_lings_list.append({
+            'id': tang_ling.id,
+            'name': tang_ling.name,
+            'description': tang_ling.description,
+            'longitude': tang_ling.longitude,
+            'latitude': tang_ling.latitude
+        })
     
-    return render_template('index.html', tang_lings_by_dynasty=tang_lings_by_dynasty)
+    return render_template('index.html', tang_lings_by_dynasty=tang_lings_by_dynasty, tang_lings=tang_lings_list)
 
 @app.route('/tang_ling/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -74,7 +83,7 @@ def tang_ling_detail(id):
     tang_ling = TangLing.query.get_or_404(id)
     reviews = Review.query.filter_by(tang_ling_id=id).all()
     spots = Spot.query.filter_by(tang_ling_id=id).all()
-    city_name = "陕西"  # 城市名称以中文显示
+    city_name = "西安"  # 城市名称以中文显示
     weather_info = get_weather_info(city_name)
 
     if request.method == 'POST':
@@ -91,8 +100,17 @@ def tang_ling_detail(id):
 @login_required
 def itinerary():
     tang_lings = TangLing.query.all()
+    tang_lings_list = []
+    for tang_ling in tang_lings:
+        tang_lings_list.append({
+            'id': tang_ling.id,
+            'name': tang_ling.name,
+            'description': tang_ling.description,
+            'longitude': tang_ling.longitude,
+            'latitude': tang_ling.latitude
+        })
     itineraries = Itinerary.query.filter_by(user_id=current_user.id).all()
-    return render_template('itinerary.html', tang_lings=tang_lings, itineraries=itineraries)
+    return render_template('itinerary.html', tang_lings=tang_lings_list, itineraries=itineraries)
 
 @app.route('/add_itinerary', methods=['POST'])
 @login_required

@@ -9,10 +9,10 @@
             <div class="card mb-4">
                 <div class="card-header">
                     <h3>{{ tang_ling.name }}</h3>
-                    <p class="card-text">{{ tang_ling.description }}</p>
                 </div>
                 <img src="{{ url_for('static', filename=tang_ling.image) }}" class="card-img-top" alt="{{ tang_ling.name }}">
                 <div class="card-body">
+                    <p class="card-text">{{ tang_ling.description }}</p>
                     <p><a href="{{ tang_ling.website }}" target="_blank">相关链接</a></p>
                 </div>
             </div>
