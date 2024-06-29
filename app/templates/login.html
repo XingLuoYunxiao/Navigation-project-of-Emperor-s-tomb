@@ -42,11 +42,21 @@
     .card .text-center a:hover {
         text-decoration: underline; /* 鼠标悬停时显示下划线 */
     }
+    .custom-title {
+    font-family: 'Times New Roman', Times, serif; /* 选择一个适合的字体 */
+    margin-top: 10px;
+    font-size: 2.5em; /* 调整字体大小 */
+    font-weight: bold; /* 加粗字体 */
+    color: #333; /* 设置字体颜色 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* 添加阴影效果 */
+    letter-spacing: 1px; /* 调整字符间距 */
+    line-height: 1.2; /* 调整行高 */
+}
 }
 </style>
 <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
     <div class="card col-md-6 col-lg-4">
-        <h2 class="text-center mb-4">登录</h2>
+        <h2 class="text-center mb-4 custom-title">欢迎来到唐十八陵</h2>
         {% if message %}
         <div class="alert alert-success text-center" role="alert">
             {{ message }}
